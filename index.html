@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en" ng-app="myApp">
+
+<head>
+    <title>Todo List</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Font Awesome and Google fonts stylesheets -->
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css' />
+    <link href="https://fonts.googleapis.com/css?family=Indie+Flower:regular" rel="stylesheet" />
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+    <!-- Custom stylesheet -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <div class="container pt-4" ng-controller="todoList">
+        <div class="card col-8 offset-2">
+            <div class="top"></div>
+            <div class="card-body">
+                <!-- Title -->
+                <h2 class="card-title">#{{ 2 - 1}} {{'TODO' + ' ' + 'List'}}
+                    <button type="button" class="btn btn-outline-dark btn-sm float-right fa fa-pencil" ng-click="add = !add"></button>
+                </h2>
+
+                <!-- Form -->
+                <form ng-submit="addTask()" ng-show="add">
+                    <div class="form-row align-items-center">
+
+                        <!-- Input -->
+                        <div class="col-auto">
+                            <div class="form-group">
+                                <label for="task">New tasks</label>
+                                <input type="text" name="task" id="task" class="form-control" placeholder="New Task" aria-describedby="taskhelp" ng-model="newTask">
+                                <small id="taskhelp" class="form-text" ng-hide="message">&nbsp;</small>
+                            </div>
+                        </div>
+
+                        <!-- Drop Down -->
+                        <div class="col-auto">
+                            <div class="form-group">
+                                <label for="importance">Importance</label>
+                                <select class="form-control" name="importance" id="importance" ng-model='howImportant' ng-options="item.level for item in importance">
+                                    <option value=''>Select Importance</option>
+                                </select>
+                                <small id="taskhelp" class="form-text" ng-hide="message">Please select importance.</small>
+                            </div>
+                        </div>
+                        
+                        <!-- Preview -->
+                        <div class="col-auto">
+                            <div class="form-group">
+                                <label for="preview">Preview</label>
+                                <textarea class="form-control" name="preview" id="preview" rows="1" ng-bind="newTask"></textarea>
+                                <small id="taskhelp" class="form-text" ng-hide="message">&nbsp;</small>
+                            </div>
+                        </div>
+                        <button type="submit" claßss="submit col-auto ml-2">Submit</button>
+                    </div>
+                </form>
+                <hr>
+
+                <!-- List -->
+                <div ng-repeat="item in tasks track by $index">
+                    <p>
+                        <input type="checkbox" ng-model="taskComplete" ng-true-value="{'text-decoration': 'line-through'}" ng-false-value="{}"> 
+                        {{ $index + 1 + '.\t'}}
+                        <span class="mark" ng-if="item[0] === '!'">{{ item.slice(0, item.indexOf(' ')) }}</span>
+                        <span ng-style="taskComplete">{{ item.replace(regExp, '') }}</span>
+                        <a href="" class="fa fa-trash float-right" ng-click="delete($index)"></a>
+                    </p>
+                    <hr>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.7/angular.min.js'></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>
